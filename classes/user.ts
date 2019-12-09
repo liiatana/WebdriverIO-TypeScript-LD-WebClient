@@ -1,8 +1,11 @@
+import { Api } from "./rest.Api"
+
 class User {
 	
 	private login: string;
 	private pwd: string;
 	private auth:string;
+	public api:Api;
 
 
 	constructor(login: string,pwd: string) {
@@ -10,7 +13,7 @@ class User {
         this.pwd=pwd;
 		let buff = new Buffer(`${this.login}:${this.login}`);
 		this.auth = "Basic "+ buff.toString('base64');
-		
+		this.api= new Api(this);
         //this.instructionTypes=new InstructionTypes();
     }
 	

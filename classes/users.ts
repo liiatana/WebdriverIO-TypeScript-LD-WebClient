@@ -3,7 +3,7 @@ import fs from 'fs';
 
 class Users {
 	
-	private users: User[];
+	public users: User[];
 	
 	constructor() {
 		this.users= new Array();
