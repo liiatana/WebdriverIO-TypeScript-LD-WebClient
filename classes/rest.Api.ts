@@ -1,7 +1,9 @@
+
 class Api {
 	
-    private cookies: string;
-    private req:any;
+    private auth: string;
+    private req:any ;
+    private baseApi: string;
     
 	
 	constructor(auth: string) {
@@ -9,22 +11,27 @@ class Api {
         //this.instructionTypes=new InstructionTypes();
         var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
         this.req= new XMLHttpRequest();
+        this.req.timeout = 30000; // 30 секунд (в миллисекундах)
+        this.baseApi= 'http://dsud-fk-msk/LanDocs.WebApi.NetCore/';
+        this.auth=auth;
 
+    }
+
+    private fullURL(method:string):string {
+        return this.baseApi+'api/v1'+ method;
     }
 	
 	public getVersion ():string {
-        this.req.open('GET', `http://dsud-fk-msk/LanDocs.WebApi.NetCore/api/v1/admin/apiversion`, false);
+        this.req.open('GET', this.fullURL('/admin/apiversion'), false);
         this.req.send(null);
-        var myVersion = "unknown"
-        if (this.req.status == 200) {
-            myVersion = this.req.responseText;  
-        }
-        //console.log("The version getted with XMLHttpRequest is " + myVersion);
-		return myVersion;
+        return this.req.responseText;
     }
 
-    
-    
+    public userAuthenticate():string {
+        this.req.open('POST', this.fullURL('/auth/basic'), false);
+        this.req.send(null);
+        return this.req.responseText;
+    }
 
 	
 }
