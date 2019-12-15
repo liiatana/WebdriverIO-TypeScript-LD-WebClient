@@ -7,3 +7,5 @@ users.loadFromJsonFile("./config/users.json");
 users.getAny();
 
 console.log(users);
+const v=users.users[0].api.getVersion();
+console.log(v + "= version");
